@@ -1,6 +1,6 @@
 //React imports
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //MUI imports
 import { CssBaseline, Grid, Box, Typography, TextField, Button, Link } from '@mui/material';
@@ -9,12 +9,16 @@ import { useTheme } from "@mui/material/styles";
 //Other imports
 import { GrGoogle } from 'react-icons/gr';
 
+//Router imports
+import { useNavigate } from 'react-router-dom';
+
 //File imports
 import '../styles/Login.css';
 
 
 const Login = (props) => {
     const theme = useTheme();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -46,7 +50,26 @@ const Login = (props) => {
         event.preventDefault();
 
         console.log(event);
+        navigate('/');
     }
+
+    const handleEmailChanged = (event) => {
+        setFormData({
+            ...formData,
+            email: event.target.value
+        });
+    }
+
+    const handlePasswordChanged = (event) => {
+        setFormData({
+            ...formData,
+            password: event.target.value
+        });
+    }
+
+    useEffect(() => {
+        console.log(formData);
+    }, [formData]);
 
     return (
         <Grid container sx={styles.mainGrid}>
@@ -91,6 +114,7 @@ const Login = (props) => {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={handleEmailChanged}
                         />
                         <TextField
                             margin="normal"
@@ -101,6 +125,7 @@ const Login = (props) => {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={handlePasswordChanged}
                         />
                         <Button
                             type="submit"
