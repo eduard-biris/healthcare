@@ -15,6 +15,14 @@ import { useNavigate } from 'react-router-dom';
 //File imports
 import '../styles/Login.css';
 
+//Firebase imports
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../firebase_setup/firebase';
+
+
+const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
+
 
 const Login = (props) => {
     const theme = useTheme();
@@ -49,8 +57,25 @@ const Login = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        console.log(event);
-        navigate('/');
+        if(!emailRegex.test(formData.email)) {
+            console.log('bad email');
+            return;
+        }
+
+        if(!passwordRegex.test(formData.password)) {
+            console.log('bad password');
+            return;
+        }
+
+        console.log('creating user...');
+        createUserWithEmailAndPassword(auth, formData.email, formData.password)
+            .then(userCredential => {
+                const user = userCredential.user;
+                console.log('logged in user:', user);
+            })
+            .catch(error => {
+                console.log('login error:', error);
+            })
     }
 
     const handleEmailChanged = (event) => {
@@ -66,10 +91,6 @@ const Login = (props) => {
             password: event.target.value
         });
     }
-
-    useEffect(() => {
-        console.log(formData);
-    }, [formData]);
 
     return (
         <Grid container sx={styles.mainGrid}>

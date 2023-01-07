@@ -12,15 +12,12 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
-  },
-  "storage": {
-    "rules": "storage.rules"
-  },
-  "emulators": {
-    "singleProjectMode": true
-  },
-  "remoteconfig": {
-    "template": "remoteconfig.template.json"
   }
 }
