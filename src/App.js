@@ -1,20 +1,19 @@
 //React imports
-import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 
-//MUI imports
-import { Typography } from '@mui/material';
-
 //File imports
+import Home from './views/Home';
+import Register from './views/Register';
 import Login from './views/Login';
-import Dashboard_Medic from './views/Medic/Dashboard_Medic';
-import Dashboard_Patient from './views/Patient/Dashboard_Patient';
+import DashboardMedic from './views/Medic/DashboardMedic';
+import DashboardPatient from './views/Patient/DashboardPatient';
 import Patients from './views/Medic/Patients';
-import New_Appointment from './views/Patient/New_Appointment';
-import Medical_History from './views/Patient/Medical_History';
-import Current_Health from './views/Patient/Current_Health';
-import Demand_Document from './views/Patient/Demand_Document';
-import Chat_Patient from './views/Patient/Chat_Patient';
+import NewAppointment from './views/Patient/NewAppointment';
+import MedicalHistory from './views/Patient/MedicalHistory';
+import CurrentHealth from './views/Patient/CurrentHealth';
+import DemandDocument from './views/Patient/DemandDocument';
+import ChatPatient from './views/Patient/ChatPatient';
 
 const theme = createTheme({
   palette: {
@@ -29,19 +28,24 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Routes>
 
-        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} >
+          <Route path="/home/login" element={<Login />} />
+          <Route path="/home/register" element={<Register />} />
+        </Route>
 
-        <Route path="/medic" element={<Dashboard_Medic />} >
+        <Route path="/medic" element={<DashboardMedic />} >
             <Route path="/medic/patients" element={<Patients />} />
         </Route>
 
-        <Route path="/patient" element={<Dashboard_Patient />}>
-            <Route path="/patient/appointment" element={<New_Appointment />} />
-            <Route path="/patient/history" element={<Medical_History />} />
-            <Route path="/patient/status" element={<Current_Health />} />
-            <Route path="/patient/document" element={<Demand_Document />} />
-            <Route path="/patient/chat" element={<Chat_Patient />} />
+        <Route path="/patient" element={<DashboardPatient />}>
+            <Route path="/patient/appointment" element={<NewAppointment />} />
+            <Route path="/patient/history" element={<MedicalHistory />} />
+            <Route path="/patient/status" element={<CurrentHealth />} />
+            <Route path="/patient/document" element={<DemandDocument />} />
+            <Route path="/patient/chat" element={<ChatPatient />} />
         </Route>
+
+        <Route path="*" element={<Navigate to="home/login"/>} />
 
       </Routes>
     </ThemeProvider>

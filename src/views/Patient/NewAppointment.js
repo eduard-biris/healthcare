@@ -4,7 +4,7 @@ import React from "react";
 //MUI imports
 import { Typography } from "@mui/material";
 
-const New_Appointment = () => {
+const NewAppointment = () => {
 
     return (
         <div>
@@ -40,4 +40,4 @@ const New_Appointment = () => {
     )
 };
 
-export default New_Appointment;
+export default NewAppointment;
