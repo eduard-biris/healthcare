@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 
 //Firebase imports
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from '../firebase_setup/firebase';
 
 
@@ -24,13 +24,14 @@ const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
 
 
-const Login = (props) => {
+const Register = (props) => {
     const theme = useTheme();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
+        checkPassword: ''
     });
 
     const styles = {
@@ -67,8 +68,13 @@ const Login = (props) => {
             return;
         }
 
+        if(!(formData.password === formData.checkPassword)) {
+            console.log('passwords dont match');
+            return;
+        }
+
         console.log('creating user...');
-        signInWithEmailAndPassword(auth, formData.email, formData.password)
+        createUserWithEmailAndPassword(auth, formData.email, formData.password)
             .then(userCredential => {
                 const user = userCredential.user;
                 console.log('logged in user:', user);
@@ -93,17 +99,24 @@ const Login = (props) => {
             })
     }
 
-    const handleEmailChanged = (event) => {
+    const handleEmailChanged = event => {
         setFormData({
             ...formData,
             email: event.target.value
         });
     }
 
-    const handlePasswordChanged = (event) => {
+    const handlePasswordChanged = event => {
         setFormData({
             ...formData,
             password: event.target.value
+        });
+    }
+
+    const handleCheckPasswordChanged = event => {
+        setFormData({
+            ...formData,
+            checkPassword: event.target.value
         });
     }
 
@@ -120,7 +133,6 @@ const Login = (props) => {
                     id="email"
                     label="Email"
                     name="email"
-                    autoComplete="email"
                     onChange={handleEmailChanged}
                 />
                 <TextField
@@ -134,20 +146,28 @@ const Login = (props) => {
                     autoComplete="current-password"
                     onChange={handlePasswordChanged}
                 />
+                <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Rescrie Parola"
+                    type="password"
+                    id="check-password"
+                    autoComplete="current-password"
+                    onChange={handleCheckPasswordChanged}
+                />
                 <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                 >
-                    Conectare
+                    Crează Cont
                 </Button>
                 <Grid container>
-                    <Grid item xs={6} sx={{textAlign: "left"}}>
-                        <Link href="#" variant="body2">Ai uitat parola?</Link>
-                    </Grid>
-                    <Grid item xs={6} sx={{textAlign: "right"}}>
-                        <Link onClick={() => {navigate("/home/register")}} variant="body2">Nu ai cont? Înregistrează-te</Link>
+                    <Grid item xs={12} sx={{textAlign: "center"}}>
+                        <Link onClick={() => navigate("/home/login")} variant="body2">Ai deja cont? Contectează-te</Link>
                     </Grid>
                 </Grid>
             </Box>
@@ -157,4 +177,4 @@ const Login = (props) => {
     )
 }
 
-export default Login;
+export default Register;

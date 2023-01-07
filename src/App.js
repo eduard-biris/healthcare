@@ -1,11 +1,10 @@
 //React imports
-import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
 
-//MUI imports
-import { Typography } from '@mui/material';
-
 //File imports
+import Home from './views/Home';
+import Register from './views/Register';
 import Login from './views/Login';
 import DashboardMedic from './views/Medic/DashboardMedic';
 import DashboardPatient from './views/Patient/DashboardPatient';
@@ -29,7 +28,10 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Routes>
 
-        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} >
+          <Route path="/home/login" element={<Login />} />
+          <Route path="/home/register" element={<Register />} />
+        </Route>
 
         <Route path="/medic" element={<DashboardMedic />} >
             <Route path="/medic/patients" element={<Patients />} />
@@ -42,6 +44,8 @@ const App = () => {
             <Route path="/patient/document" element={<DemandDocument />} />
             <Route path="/patient/chat" element={<ChatPatient />} />
         </Route>
+
+        <Route path="*" element={<Navigate to="home/login"/>} />
 
       </Routes>
     </ThemeProvider>
