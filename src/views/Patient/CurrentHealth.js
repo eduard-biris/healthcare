@@ -1,13 +1,13 @@
 //React imports
 import React from "react";
 
-const Medical_History = () => {
+const CurrentHealth = () => {
 
     return (
         <div>
-            medical history
+            current health
         </div>
     );
 };
 
-export default Medical_History;
+export default CurrentHealth;

@@ -1,13 +1,13 @@
 //React imports
 import React from "react";
 
-const Demand_Documents = () => {
+const MedicalHistory = () => {
 
     return (
         <div>
-            document
+            medical history
         </div>
     );
 };
 
-export default Demand_Documents;
+export default MedicalHistory;

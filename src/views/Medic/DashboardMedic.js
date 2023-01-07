@@ -19,15 +19,11 @@ import ListItemText from '@mui/material/ListItemText';
 
 
 //Router imports
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 //Icon Imports
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import MedicalServicesOutlinedIcon from '@mui/icons-material/MedicalServicesOutlined';
-import HistoryToggleOffOutlinedIcon from '@mui/icons-material/HistoryToggleOffOutlined';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
-import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
+import Diversity1OutlinedIcon from '@mui/icons-material/Diversity1Outlined';
 
 const drawerWidth = 240;
 
@@ -100,33 +96,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const servicesMenuItems = [
     {
-        text: 'Consultație',
-        icon: <MedicalServicesOutlinedIcon />,
-        to: '/patient/appointment'
-    },
-
-    {
-        text: 'Istoric Medical',
-        icon: <HistoryToggleOffOutlinedIcon />,
-        to: '/patient/history'
-    },
-
-    {
-        text: 'Stare curentă',
-        icon: <FavoriteBorderOutlinedIcon />,
-        to: '/patient/status'
-    },
-
-    {
-        text: 'Solicită acte',
-        icon: <SaveAltOutlinedIcon />,
-        to: '/patient/document'
-    },
-
-    {
-        text: 'Întreabă-ți doctorul',
-        icon: <QuestionAnswerOutlinedIcon />,
-        to: '/patient/chat'
+        text: 'Pacienți',
+        icon: <Diversity1OutlinedIcon />
     }
 ];
 
@@ -137,10 +108,9 @@ const accountMenuItems = [
     }
 ];
 
-const Dashboard_Patient = () => {
+const DashboardMedic = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -168,7 +138,7 @@ const Dashboard_Patient = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Patient Dashboard
+            Medic Dashboard
           </Typography>
         </Toolbar>
       </AppBar>
@@ -180,7 +150,7 @@ const Dashboard_Patient = () => {
         </DrawerHeader>
         <Divider />
         <List>
-          {servicesMenuItems.map(({text, icon, to}, index) => (
+          {servicesMenuItems.map(({text, icon}, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -188,7 +158,6 @@ const Dashboard_Patient = () => {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-                onClick={() => navigate(to)}
               >
                 <ListItemIcon
                   sx={{
@@ -238,4 +207,4 @@ const Dashboard_Patient = () => {
   );
 }
 
-export default Dashboard_Patient;
+export default DashboardMedic;

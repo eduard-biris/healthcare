@@ -1,13 +1,13 @@
 //React imports
 import React from "react";
 
-const Chat_Patient = () => {
-    
+const DemandDocument = () => {
+
     return (
         <div>
-            chat
+            document
         </div>
     );
 };
 
-export default Chat_Patient;
+export default DemandDocument;
